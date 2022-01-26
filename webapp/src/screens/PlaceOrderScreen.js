@@ -6,10 +6,9 @@ import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { createOrder } from "../actions/orderActions";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
-
+import { propTypes } from "react-bootstrap/esm/Image";
 
 const PlaceOrderScreen = ({ history }) => {
-
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, error, success } = orderCreate;
 
@@ -28,18 +27,16 @@ const PlaceOrderScreen = ({ history }) => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
-    if (!cart.paymentMethod) {
-      history.push("/payment");
+  if (!cart.paymentMethod && !cart.cashOnDelivery) {
+    history.push("/payment");
+  }
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
     }
-
-    useEffect(() => {
-      if (success) {
-        history.push(`/order/${order._id}`);
-        dispatch({ type: ORDER_CREATE_RESET });
-      }
-    }, [success, history]);
-
-
+  }, [success, history]);
 
   const placeOrder = () => {
     dispatch(
@@ -54,6 +51,7 @@ const PlaceOrderScreen = ({ history }) => {
       })
     );
   };
+
 
   return (
     <diV>

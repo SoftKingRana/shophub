@@ -9,6 +9,7 @@ import { Col, Container, Form, NavDropdown, Row } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { logout } from "../../actions/userActions";
 import SearchBox from "./SearchBox";
+import SideSlider from "../SideSlider/SideSlider";
 
 // const Container = styled.div`
 //   height: 60px;
@@ -100,13 +101,14 @@ const HeaderTop = () => {
     <Container className="bg-dark">
       <Wrapper>
         <Left>
+          <SideSlider />
           <Link to="/">
             <Logo>shopHub</Logo>
           </Link>
         </Left>
 
         <Center>
-        <SearchBox />
+          <SearchBox />
         </Center>
 
         <Right>

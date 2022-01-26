@@ -24,7 +24,7 @@ function ProductCarousel() {
         <Carousel
           xs={12}
           md={12}
-          lg={12}
+          
           pause="hover"
           className="bg-light cover"
         >
@@ -34,7 +34,7 @@ function ProductCarousel() {
                 <Image
                   xs={12}
                   md={12}
-                  lg={12}
+                  
                   src={product.image}
                   alt={product.name}
                   img-fluid

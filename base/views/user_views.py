@@ -58,6 +58,11 @@ def updateUserProfile(request):
     user.first_name = data['name']
     user.username = data['email']
     user.email = data['email']
+    user.phone_no = data['phone_no']
+    user.shop_name = data['shop_name']
+    user.postalCode = data['postalCode']
+    user.country = data['country']
+
 
     if data['password'] != '':
         user.password = make_password(data['password'])
@@ -68,6 +73,7 @@ def updateUserProfile(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+
 def getUserProfile(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
@@ -76,6 +82,7 @@ def getUserProfile(request):
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
+
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
@@ -83,7 +90,8 @@ def getUsers(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
+@permission_classes([IsAuthenticated])
+
 def getUserById(request, pk):
     user = User.objects.get(id=pk)
     serializer = UserSerializer(user, many=False)
@@ -91,7 +99,8 @@ def getUserById(request, pk):
 
 
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAdminUser])
+
 def updateUser(request, pk):
     user = User.objects.get(id=pk)
 

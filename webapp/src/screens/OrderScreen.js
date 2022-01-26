@@ -222,7 +222,7 @@ const OrderScreen = ({ match, history }) => {
                 </Row>
               </ListGroup.Item>
 
-              {!order.isPaid && (
+              {!order.isPaid && order.paymentMethod && (
                 <ListGroup.Item>
                   {loadingPay && <LinearProgress />}
 

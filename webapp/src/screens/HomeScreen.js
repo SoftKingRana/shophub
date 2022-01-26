@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import Product from "../components/Product";
 import Loader from "../components/Loader/Loader";
 
@@ -8,6 +8,8 @@ import { listProducts } from "../actions/productActions";
 import Message from "../components/Message/Message";
 import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
+import AlignItemsList from "../components/ListItemProduct";
+
 
 
 function HomeScreen({ history }) {
@@ -23,7 +25,17 @@ useEffect(() => {
 
   return (
     <div>
-      {!keyword && <ProductCarousel />}
+      {!keyword && (
+        <Row>
+          <Col md={3}>
+            <AlignItemsList />
+          </Col>
+          <Col md={9}>
+            {" "}
+            <ProductCarousel />{" "}
+          </Col>
+        </Row>
+      )}
       {loading ? (
         <Loader />
       ) : error ? (

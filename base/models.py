@@ -9,8 +9,11 @@ class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     image = models.ImageField(null=True, blank=True, default='/thumbnail.jpg')
+    image_one = models.ImageField(null=True, blank=True)
+    image_two = models.ImageField(null=True, blank=True)
+    image_three = models.ImageField(null=True, blank=True)
     brand = models.CharField(max_length=200, null=True, blank=True)
-    category = models.CharField(max_length=200, null=True, blank=True)
+    categories = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     rating = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
@@ -41,6 +44,7 @@ class Review(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     paymentMethod = models.CharField(max_length=200, null=True, blank=True)
+    
     taxPrice = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
     shippingPrice = models.DecimalField(
@@ -84,3 +88,23 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return str(self.address)
+
+
+class ProfileCreate(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    phone_no = models.CharField(max_length=14, null=True)
+    shop_name = models.CharField(max_length=244, null=True)
+    shop_address = models.CharField(max_length=200, null=True)
+    city = models.CharField(max_length=20, null=True)
+    country = models.CharField(max_length=20, null=True)
+    website = models.CharField(max_length=200, blank=True, null=True)
+    shiop_area_code = models.CharField(null=True, blank=True, max_length=2)
+    landline_number = models.CharField(null=True, blank=True, max_length=9)
+    image = models.ImageField(null=True, blank=True, default='/profilepic.png')
+
+    def __str__(self):
+        return str(self.user)
+
+
+
+

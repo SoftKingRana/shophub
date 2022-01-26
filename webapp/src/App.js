@@ -20,6 +20,7 @@ import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import HeaderTop from "./components/Header/HeaderTop";
+import ResponsiveAppBar from "./components/ResponsiveAppBar";
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
     
     <div className="bg-dark">
     
-       <HeaderTop />
+       <ResponsiveAppBar />
     </div>
      
 
