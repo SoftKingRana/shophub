@@ -26,7 +26,7 @@ function HomeScreen({ history }) {
   return (
     <div>
       {!keyword && (
-        <div style={{ top:"100px"}}>
+        <div style={{ top: "100px" }}>
           <Row>
             <Col md={3}>
               <AlignItemsList />
@@ -37,7 +37,6 @@ function HomeScreen({ history }) {
           </Row>
           <Row>
             <Categories />
-            {/* <ProductCarousel /> */}
           </Row>
         </div>
       )}
@@ -54,6 +53,7 @@ function HomeScreen({ history }) {
               </Col>
             ))}
           </Row>
+          <Row><ProductCarousel /></Row>
           <Paginate page={page} pages={pages} keyword={keyword} />
         </div>
       )}
