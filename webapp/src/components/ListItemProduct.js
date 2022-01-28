@@ -1,109 +1,68 @@
 import * as React from "react";
+import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
+
+import styled from "styled-components";
+
+const Ul = styled.ul`
+  flex: 1;
+  margin-left: 10px;
+`;
+const Li = styled.li`
+  margin: 5px;
+  padding: 5px;
+  font-size: 18px;
+  color:black;
+`;
 
 export default function AlignItemsList() {
+
+
   return (
-    <List className="listCategoryTop"
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+      style={{ backgroundColor: " #ffffff73" }}
       sx={{
+        flexGrow: 1,
+
+        display: { xs: "none", md: "block" },
         width: "100%",
         height: "100%",
-        maxWidth: 360,
-        bgcolor: "background.paper",
       }}
+      subheader={
+        <ListSubheader component="div" id="nested-list-subheader">
+          Nested List Items
+        </ListSubheader>
+      }
     >
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Ali Connors
-              </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Summer BBQ"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                to Scott, Alex, Jennifer
-              </Typography>
-              {" — Wish I could come, but I'm out of town this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Oui Oui"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Sandra Adams
-              </Typography>
-              {" — Do you have Paris recommendations? Have you ever…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                Ali Connors
-              </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-      
+      <Ul>
+        <Li>
+          <a href="#">Teams</a>
+        </Li>
+        <Li>
+          <a href="#">Locations</a>
+        </Li>
+        <Li>
+          <a href="#">Life at Netflix</a>
+        </Li>
+        <Li>
+          <ul>
+            <Li>
+              <a href="#">Netflix culture memo</a>
+            </Li>
+            <Li>
+              <a href="#">Work Life balance</a>
+            </Li>
+            <Li>
+              <a href="#">Inclusion & diversity</a>
+            </Li>
+            <Li>
+              <a href="#">Blog</a>
+            </Li>
+          </ul>
+        </Li>
+      </Ul>
     </List>
   );
 }

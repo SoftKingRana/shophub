@@ -1,0 +1,93 @@
+$button-size: 42px;
+
+.containerx {
+  display: flex;
+  flex-grow: 1;
+  flex-flow: column nowrap;
+  overflow: hidden;
+  padding: 0 $button-size/2;
+
+  &.extendToEdgex {
+    padding-right: 0;
+    .titlebar {
+      padding-right: $button-size/2;
+    }
+  }
+}
+
+.titlebarx {
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  justify-content: space-between;
+
+  .arrowsx {
+    display: flex;
+    align-self: center;
+    .arrowx {
+      padding-left: 10px;
+    }
+  }
+}
+
+.arrowx {
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: opacity .2s ease-in-out;
+  z-index: 3;
+
+  &.hidex {
+    display: none;
+  }
+  .buttonx {
+    padding: 2px; //also change .card padding
+  }
+}
+
+.sliderx {
+  position: relative;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+
+  .cardContainerx{
+    overflow: hidden;
+    .scrollablex {      
+      display: flex;
+      overflow-y: hidden;
+      overflow-x: auto;
+      flex-grow: 1;
+      z-index: 1;
+      position: relative;
+      height: 100%;
+      margin-bottom: -20px;
+      padding-bottom: 20px;
+    }
+  }
+  
+  .arrowx {
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    margin: -$button-size/2;
+  
+    &.leftx {
+      left: 0;
+    }
+    &.rightx {
+      right: 0;
+    }
+    .buttonx {
+      background-color: white;
+      box-shadow: 0 2px 4px 0 #cdced9;
+      border: solid 1px #ececec;
+      &:hover, &:active, &:focus {
+        background-color: white;
+      }
+    }  
+  }
+}
+
+.cardx {
+  padding: 1px;
+}

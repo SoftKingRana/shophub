@@ -1,145 +1,209 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Badge, Grid } from "@material-ui/core";
+import { Badge } from "@material-ui/core";
+import "./stickyNav.css";
 
-import Message from "./Message";
-import { addToCart, removeFromCart } from "../actions/cartActions";
-import { styled } from "@mui/material/styles";
+import SideSlider from "./SideSlider/SideSlider";
+import { styled, alpha } from "@mui/material/styles";
 
-import Paper from "@mui/material/Paper";
-import { Col, Image, ListGroup, Row } from "react-bootstrap";
+import InputBase from "@mui/material/InputBase";
+
+import SearchIcon from "@mui/icons-material/Search";
+import { ListGroup, NavDropdown } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+
+const Search = styled("form")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "white",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
-const ResponsiveAppBar = ({ match, location, history }) => {
+const ResponsiveAppBar = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
+  const [keyword, setKeyword] = useState("");
+
+  let history = useHistory();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (keyword) {
+      history.push(`/?keyword=${keyword}&page=1`);
+    } else {
+      history.push(history.push(history.location.pathname));
+    }
+  };
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => setOffset(window.pageYOffset);
+    // clean up code
+    window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      style={{ backgroundColor: "#000" }}
+      className={` nonStickyNav ${offset >= 400 ? "stickyNav" : ""}`}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
             component="div"
+            color="secondary"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            LOGO
+            <Link to="/">shopHub</Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
+            <IconButton size="large" color="inherit">
+              <SideSlider />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            ShopHub
-          </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {userInfo && userInfo.isAdmin && (
+              <NavDropdown title="Admin" id="adminmenue">
+                <LinkContainer to="/admin/userlist">
+                  <NavDropdown.Item className="text-dark">
+                    Users
+                  </NavDropdown.Item>
+                </LinkContainer>
+
+                <LinkContainer to="/admin/productlist">
+                  <NavDropdown.Item className="text-dark">
+                    Products
+                  </NavDropdown.Item>
+                </LinkContainer>
+
+                <LinkContainer to="/admin/orderlist">
+                  <NavDropdown.Item className="text-dark">
+                    Orders
+                  </NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
+            )}
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
+                style={{ color: "#fff" }}
               >
                 {page}
               </Button>
             ))}
           </Box>
 
+          <Search className="mx-2" onSubmit={submitHandler}>
+            <SearchIconWrapper>
+              <SearchIcon type="submit" />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+              type="text"
+              name="q"
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+          </Search>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Cart">
               <IconButton
                 onClick={handleOpenUserMenu}
                 size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
                 sx={{ p: 0 }}
+                aria-label="cart"
               >
-                <Badge badgeContent={cartItems.length} color="error">
-                  <ShoppingCartIcon />
-                </Badge>
+                <StyledBadge badgeContent={cartItems.length} color="error">
+                  <ShoppingCartIcon style={{ color: "#fff" }} />
+                </StyledBadge>
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: "45px", display: "flex" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -155,13 +219,13 @@ const ResponsiveAppBar = ({ match, location, history }) => {
               onClose={handleCloseUserMenu}
             >
               {cartItems.map((item) => (
-                <MenuItem key={item}>
-                  <Typography textAlign="center">
+                <ListGroup sx={{ display: "flex" }} key={item}>
+                  <ListGroup.Item textAlign="center">
                     <Link to="/cart" style={{ color: "black" }}>
                       {item.name}
                     </Link>
-                  </Typography>
-                </MenuItem>
+                  </ListGroup.Item>
+                </ListGroup>
               ))}
             </Menu>
           </Box>

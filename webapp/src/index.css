@@ -53,10 +53,3 @@ h3 {
     font-size: 2.5vw;
   }
 }
-
-
-@media (max-width: 900px) {
-  .listCategoryTop {
-   display:none;
-  }
-}

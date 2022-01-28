@@ -1,0 +1,38 @@
+
+.nonStickyNav{
+ position:static;
+
+  background-color: rgb(65, 64, 64);
+ 
+  transition: all 0.3s ease-in-out;
+ 
+}
+.nonStickyNav a {
+  color: rgb(247, 247, 247);
+  padding: 7px 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nonStickyNav a:hover {
+  color: #ff4f3b;
+  font-weight: bold;
+}
+
+.stickyNav {
+  background-color: rgb(100, 100, 100);
+   position:static;
+}
+
+.stickyNav a {
+  color: rgb(255, 255, 255);
+   
+  
+}
+
+
+
+.stickyNav a:hover {
+  color: #ffee00;
+  font-weight: bold;
+}
+
